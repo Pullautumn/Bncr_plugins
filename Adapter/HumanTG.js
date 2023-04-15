@@ -49,7 +49,7 @@ module.exports = () => {
       autoReconnect: true /* 是否自动重连 */,
       floodSleepThreshold: 20,
       deviceModel: 'Bncr' /* 设备名 */,
-      appVersion: await sysDB.get('Version') /* 版本 */,
+      appVersion: await sysDB.get('Version') /* 版本 */
     }
     if (sysMethod.config.HumanTG.proxyEnable) {
       sysMethod.startOutLogs('使用socks5登录HumanTG...')
@@ -65,7 +65,7 @@ module.exports = () => {
       phoneNumber: async () => await input.text('输入注册TG手机号(带+86): '),
       password: async () => await input.text('输入密码: '),
       phoneCode: async () => await input.text('输入TG收到的验证码: '),
-      onError: (err) => console.log(err),
+      onError: (err) => console.log(err)
     })
     try {
       await client.getDialogs().catch((e) => e)
@@ -112,7 +112,7 @@ module.exports = () => {
         groupName: event.isPrivate ? '' : message?.chat?.title || '',
         msg: message.text || '',
         msgId: `${message?.id}` || '',
-        replyToMsgId: `${message?.replyTo?.replyToMsgId}` || '0',
+        replyToMsgId: `${message?.replyTo?.replyToMsgId}` || '0'
       }
       /* 禁用陌生人消息 */
       // if (msgInfo.userId !== loginUserInfo.id.toString() && msgInfo.groupId === '0') return
@@ -136,7 +136,7 @@ module.exports = () => {
               // throw new Error('')   //取消注释此行代码为直接发送消息,不编辑
               sendRes = await client.editMessage(sendID, {
                 message: +replyInfo.toMsgId,
-                text: replyInfo.msg,
+                text: replyInfo.msg
               })
               return (sendRes && `${sendRes.id}`) || ''
             } catch (e) {
@@ -147,20 +147,20 @@ module.exports = () => {
           sendRes = await client.sendMessage(sendID, {
             message: replyInfo.msg,
             parseMode: 'md',
-            replyTo: +replyInfo.toMsgId,
+            replyTo: +replyInfo.toMsgId
           })
         } else if (replyInfo.type === 'image') {
           sendRes = await client.sendMessage(sendID, {
             message: replyInfo?.msg || '',
             file: replyInfo.path,
             replyTo: +replyInfo.toMsgId,
-            forceDocument: false,
+            forceDocument: false
           })
         } else if (replyInfo.type === 'video') {
           sendRes = await client.sendMessage(sendID, {
             message: replyInfo?.msg || '',
             file: replyInfo.path,
-            replyTo: +replyInfo.toMsgId,
+            replyTo: +replyInfo.toMsgId
           })
         } else if (replyInfo.type === 'audio') {
           sendRes = await client.sendMessage(sendID, {
@@ -169,9 +169,9 @@ module.exports = () => {
             attributes: [
               new Api.DocumentAttributeAudio({
                 title: replyInfo.name,
-                performer: replyInfo.singer,
-              }),
-            ],
+                performer: replyInfo.singer
+              })
+            ]
           })
         }
         return (sendRes && `${sendRes.id}`) || ''
@@ -202,7 +202,7 @@ module.exports = () => {
               message: +replyInfo.msgId,
               text: replyInfo.msg,
               file: replyInfo.path,
-              forceDocument: false,
+              forceDocument: false
             })
             return (sendRes && `${sendRes.id}`) || ''
           } catch (e) {
